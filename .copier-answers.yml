@@ -1,0 +1,9 @@
+# Changes here will be overwritten by Copier; you should not edit this file manually.
+_commit: v0.3.1
+_src_path: gh:yzhaoinuw/agent_collab_treaty
+agent_pointers:
+- claude-code
+env_activation: ''
+include_treaty_badge: true
+integration_branch: main
+test_command: ''
