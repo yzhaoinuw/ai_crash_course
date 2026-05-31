@@ -8,7 +8,30 @@ If today's date already has a `## YYYY-MM-DD` header at the top, add a new `###`
 
 Update this log at the end of any substantive work session unless the user explicitly asks not to document it. Substantive work includes file edits, meaningful validation or debugging, technical decisions or reversals, reusable discoveries, branch/PR/release state changes, or follow-up work that future agents need. Log useful experiments even when the code was reverted; skip casual Q&A, trivial one-off commands, and pure scratch work with no future coordination value.
 
+## 2026-05-31
+
+### Added treaty adoption badge + fixed broken README Topics link (claude-opus-4-8, default)
+
+- User noticed no Agent Collab Treaty badge on the GitHub page. Clarified the badge is opt-in (offered by `treaty init`, not added by merely following the treaty) and was never added here.
+- Sourced the real badge markup from the template repo (`gh:yzhaoinuw/agent_collab_treaty`, `copier.yml`) instead of hand-writing a URL. Did NOT run `treaty init` in-repo (would re-template the customized AGENTS.md/work_log.md); cloned to a temp dir, extracted markup, removed temp dir.
+- User chose the tri-color SVG variant. Added it to `README.md`: `assets/treaty-adopted.svg` raw URL linking to the treaty repo. Caveat flagged to user: the template warns raw-SVG badges may not render through GitHub's camo proxy for all viewers; shields.io variant is the reliable fallback (one-line swap if it shows broken).
+- Also fixed a pre-existing broken link: README "Topics" pointed at the deleted monolith `llm-internals/context-memory-and-generation.md`; repointed to `llm-internals/README.md` (the roadmap index from the restructure).
+
+### Added an information-flow illustration to the KV cache note (claude-opus-4-8, default)
+
+- User asked for a simple illustration of information-flow direction and what happens when a new KV entry is created. Added an "Illustration: information flow and the append step" subsection to `llm-internals/02-decoder-only-generation/04-kv-cache.md` using ASCII/`text` diagrams: (1) a new token ("mat") forming a query, attending over the frozen cache, producing its own K/V, and being appended; (2) a step-by-step append trace showing earlier entries never change; (3) a one-way arrow-of-flow diagram (new-reads-old, never backward).
+- Content-only change; no tests/runtime in this repo.
+
 ## 2026-05-30
+
+### Expanded the KV cache note with the speedup trade-off (claude-opus-4-8, default)
+
+- User asked "what's the catch with the KV cache" and proposed a mental model (cached tokens' attention to each other is frozen; only the new token attends over the cache). Confirmed the model is correct and grounded it in causal masking.
+- Added two sections to `llm-internals/02-decoder-only-generation/04-kv-cache.md`:
+  - "Why it is safe to cache" — frozen K/V for past tokens, one new query per decode step, and the immutable-prefix caveat (edit anything early → cache invalid downstream). Emphasizes the cache is exact, not an approximation.
+  - "So what is the catch? (compute for memory)" — the trade is recomputation for memory: (1) cache size grows linearly and can exceed model weights, capping context length + concurrency; (2) decode is memory-bandwidth bound, since each step re-reads the whole cache, so per-token latency grows with context length even though the per-step math is constant. Connects to why paged attention / GQA / quantized caches exist (the "KV cache engineering" future module).
+- Follow-up: user pushed back with the common misconception that earlier tokens must be re-attended to the expanded context to "stay accurate." Added a subsection "But don't the earlier words need to re-read the expanded context?" to the same note: cache is append-only (written once per token, never rewritten); decoder-only models are causal by design/training so earlier tokens are *not supposed* to see later context; context integrates at the frontier (new-reads-old), never backward; and this is why bidirectional BERT-style encoders cannot use an append-only KV cache.
+- Content-only change; no tests/runtime in this repo.
 
 ### Recorded course-structure decision; committed + pushed the restructure (claude-opus-4-8, default)
 
