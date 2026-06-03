@@ -174,10 +174,17 @@ Do not mention tests, docs, project memory updates, or behind-the-scenes impleme
 
 ## Project-Specific Reminders
 
-Add domain-specific gotchas here. These are the things that aren't obvious from reading the code and that an agent would otherwise have to learn the hard way.
+### Note-Writing Style
 
-Examples (delete and replace with your own):
+This is a learning / knowledge-base project. When writing or expanding notes:
 
-- [Don't blow away debug breadcrumbs / parameter-rich filenames during pipeline iteration — they're load-bearing for explaining regressions later.]
-- [Migrations must be reviewed against the staging snapshot before merge; the schema in `db/schema.sql` is the source of truth, not the ORM model.]
-- [The `api/v1/` surface is frozen; new endpoints land under `api/v2/`.]
+- **Use `text` block illustrations when they significantly aid understanding** —
+  for example, showing a causal mask as a grid, comparing training vs inference
+  token-by-token, or tracing information flow through a cache. Prefer labeled
+  `text` blocks over prose for anything spatial or sequential.
+- **Do not add an illustration just to have one.** If the prose is already clear,
+  skip it. One good diagram beats three mediocre ones.
+- **At the end of a substantive learning session, suggest 2–4 further readings**
+  that the learner could explore if they want to go deeper. Easy-to-read blogs
+  and articles are preferred over papers. Include a one-line note on what each
+  resource is best for.

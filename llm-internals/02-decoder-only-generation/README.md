@@ -12,6 +12,8 @@ By the end you should be able to:
 - Distinguish the **prefill** phase from the **decode** phase.
 - Describe what the KV cache stores and why it makes generation fast.
 - Explain why long context is expensive even with these optimizations.
+- Describe what a single training sample looks like and why next-token prediction
+  trains all positions in parallel.
 
 ## Lessons
 
@@ -21,8 +23,51 @@ By the end you should be able to:
 4. [The KV cache](04-kv-cache.md)
 5. [Why sequential decoding is still fast](05-why-decoding-is-fast.md)
 6. [Why long context is expensive](06-long-context-cost.md)
+7. [Training a decoder-only model](07-training-a-decoder-only-model.md)
 
 ## Readings For This Module
+
+### Andrej Karpathy — Let's Build GPT From Scratch
+
+The best hands-on walkthrough of how a decoder-only GPT is trained. Karpathy
+codes the entire thing — data loading, causal masking, training loop, generation —
+from scratch in PyTorch while explaining every step.
+
+Best for: understanding training samples, teacher forcing, the causal mask in
+code, and how inference emerges from the same machinery as training.
+
+```text
+https://www.youtube.com/watch?v=kCc8FmEb1nY
+```
+
+### Lilian Weng — Generalized Language Models
+
+Covers the evolution of language modeling from n-grams through ELMo, GPT, BERT,
+and beyond. Good for understanding how next-token prediction became the dominant
+pretraining objective and why it generalizes so well.
+
+Best for: historical context, comparing encoder-only vs decoder-only pretraining
+objectives, understanding why "predict the next token" scales so well.
+
+```text
+https://lilianweng.github.io/posts/2019-01-31-lm/
+```
+
+### Sebastian Raschka — Build a Large Language Model (From Scratch) — online book
+
+Detailed, code-first walkthrough of building and training a GPT-style model.
+Raschka explains data preparation, tokenization, the training loop, and
+finetuning in clear prose with runnable notebooks.
+
+Best for: a thorough code-level understanding of pretraining, the data pipeline,
+cross-entropy loss in context, and how base models become chat models.
+
+```text
+https://www.manning.com/books/build-a-large-language-model-from-scratch
+```
+(free chapters available; full book is paid)
+
+---
 
 ### Jay Alammar — The Illustrated Transformer
 

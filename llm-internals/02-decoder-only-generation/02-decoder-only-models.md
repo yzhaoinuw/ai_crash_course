@@ -10,6 +10,23 @@ ChatGPT-style models are generally decoder-only transformers.
 - The prompt is treated as a prefix.
 - The answer is treated as a continuation.
 
+The "can only attend to earlier tokens" rule is enforced by a **causal mask** — a
+lower-triangular mask on the attention scores that zeros out any attention to
+future positions:
+
+```text
+              The   cat   sat   on    mat
+         The [  ✓     ·     ·    ·     ·  ]
+         cat [  ✓     ✓     ·    ·     ·  ]
+         sat [  ✓     ✓     ✓    ·     ·  ]
+          on [  ✓     ✓     ✓    ✓     ·  ]
+         mat [  ✓     ✓     ✓    ✓     ✓  ]
+```
+
+`✓` = allowed to attend, `·` = masked to −∞ (→ 0 after softmax).
+This mask is also what makes the [KV cache](04-kv-cache.md) safe and what allows
+all token positions to be trained [in parallel](07-training-a-decoder-only-model.md).
+
 The model does not have a separate encoder that reads the whole prompt
 bidirectionally.
 

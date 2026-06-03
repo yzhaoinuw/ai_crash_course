@@ -8,6 +8,16 @@ If today's date already has a `## YYYY-MM-DD` header at the top, add a new `###`
 
 Update this log at the end of any substantive work session unless the user explicitly asks not to document it. Substantive work includes file edits, meaningful validation or debugging, technical decisions or reversals, reusable discoveries, branch/PR/release state changes, or follow-up work that future agents need. Log useful experiments even when the code was reverted; skip casual Q&A, trivial one-off commands, and pure scratch work with no future coordination value.
 
+## 2026-06-03
+
+### Added training internals lesson and note-writing conventions (claude-sonnet-4-6, high effort)
+
+- Conversation covered: what a training sample looks like (raw text chunks, not sentences), teacher forcing, why all positions train in parallel, the causal mask, cross-entropy as distribution learning (not point-guess), batching semantics (within-sequence vs across-sequence).
+- Created `llm-internals/02-decoder-only-generation/07-training-a-decoder-only-model.md` with `text` block illustrations for all major concepts.
+- Updated `02-decoder-only-models.md` to add a causal mask grid where the file had previously only described the rule in prose.
+- Updated module `README.md`: added lesson 7, one new learning objective, and three new training-focused readings (Karpathy "Let's Build GPT", Lilian Weng generalized LMs, Sebastian Raschka's LLM book).
+- Updated `AGENTS.md` Project-Specific Reminders: added note-writing style guidance — use `text` illustrations when they add real value (not by default), suggest 2–4 further readings at end of substantive learning sessions, prefer blogs/articles over papers.
+
 ## 2026-05-31
 
 ### Added treaty adoption badge + fixed broken README Topics link (claude-opus-4-8, default)
