@@ -8,6 +8,17 @@ If today's date already has a `## YYYY-MM-DD` header at the top, add a new `###`
 
 Update this log at the end of any substantive work session unless the user explicitly asks not to document it. Substantive work includes file edits, meaningful validation or debugging, technical decisions or reversals, reusable discoveries, branch/PR/release state changes, or follow-up work that future agents need. Log useful experiments even when the code was reverted; skip casual Q&A, trivial one-off commands, and pure scratch work with no future coordination value.
 
+## 2026-07-02
+
+### Added prompt-caching lesson to Module 02 (claude-opus-4-8, default)
+
+- Conversation started as Q&A: does an agent hitting a permission/sandbox-escalation wall re-read the whole context and waste tokens? Traced the answer to prompt caching. Verified against official docs via WebSearch/WebFetch before writing: Claude Code prompt-caching doc (statelessness → full re-send each turn; exact-prefix match; append keeps cache, prefix change busts it; cache read ≈10% of input, cache write premium; 5-min vs 1-hr TTL, 1-hr auto on subscription) and the sandboxing doc (the `dangerouslyDisableSandbox` escape hatch: a failed sandboxed command is retried unsandboxed through the normal permission flow; `allowUnsandboxedCommands` defaults true). Corrected two things I'd said from memory: the escalation retry is an appended tool call so it is cache-safe (not a reprocess), and the approval window is ~1 hr on a subscription, not 5 min.
+- Checked coverage first: prompt caching / TTL / sandbox / escalation / momentum appeared nowhere in `llm-internals/`. `01-stateless` and `04-kv-cache` (immutable-prefix logic) were the natural groundwork.
+- Created `llm-internals/02-decoder-only-generation/07-prompt-caching-and-turn-cost.md`: framed prompt caching as the KV-cache principle across requests; the prefix rule (append cheap, edit-early = full reprocess) with a layered-prefix `text` diagram; per-turn cost breakdown (read ~10% / new input / output / write premium); warm-vs-cold TTL diagram; and an agent-agnostic "Applied" section (Claude Code as the concrete example) showing a permission/escalation retry is cache-safe, so the real cost is momentum + latency, not tokens. Added 4 further readings (Anthropic prompt-caching API doc, Claude Code prompt-caching doc, "prompt caching is everything" blog, OpenAI prompt caching for the cross-vendor angle).
+- Renumbered training lesson 07 → 08 (`git mv`) so the inference-mechanics lessons stay grouped; prompt caching is now lesson 07. Updated the one in-repo link in `02-decoder-only-models.md` (07→08).
+- Updated module `README.md` (new objective bullet, lessons list now 1–8, four prompt-caching readings) and roadmap `README.md` (Module 02 highlight bullets now include prompt caching + the previously-missing training bullet; consolidated bookmark list gained the four prompt-caching links).
+- Content-only change; no tests/runtime in this repo. Verified with ripgrep that no stale `07-training` links remain (only the historical work-log line) and that every internal link in the new lesson resolves.
+
 ## 2026-06-03
 
 ### Added training internals lesson and note-writing conventions (claude-sonnet-4-6, high effort)

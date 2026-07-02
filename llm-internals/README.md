@@ -41,6 +41,8 @@ The core machine: a stateless next-token predictor and the loop it runs.
 - The KV cache
 - Why sequential decoding is still fast
 - Why long context is expensive (O(n²) attention)
+- Prompt caching across turns (prefix reuse; why permission prompts cost momentum, not tokens)
+- Training a decoder-only model (teacher forcing, the causal mask)
 
 ### [03 — Generation Quality and Decoding](03-generation-quality-and-decoding/)
 
@@ -128,6 +130,18 @@ https://magazine.sebastianraschka.com/p/coding-the-kv-cache-in-llms
 
 Daily Dose of Data Science KV cache:
 https://blog.dailydoseofds.com/p/kv-caching-in-llms-explained-visually
+
+Anthropic prompt caching (API docs):
+https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+
+Claude Code prompt caching:
+https://code.claude.com/docs/en/prompt-caching
+
+Lessons from building Claude Code (prompt caching is everything):
+https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything
+
+OpenAI prompt caching:
+https://platform.openai.com/docs/guides/prompt-caching
 
 The Illustrated Word2vec:
 https://jalammar.github.io/illustrated-word2vec/

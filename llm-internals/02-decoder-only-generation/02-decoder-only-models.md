@@ -25,7 +25,7 @@ future positions:
 
 `✓` = allowed to attend, `·` = masked to −∞ (→ 0 after softmax).
 This mask is also what makes the [KV cache](04-kv-cache.md) safe and what allows
-all token positions to be trained [in parallel](07-training-a-decoder-only-model.md).
+all token positions to be trained [in parallel](08-training-a-decoder-only-model.md).
 
 The model does not have a separate encoder that reads the whole prompt
 bidirectionally.

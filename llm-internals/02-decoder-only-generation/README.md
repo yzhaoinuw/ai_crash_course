@@ -12,6 +12,8 @@ By the end you should be able to:
 - Distinguish the **prefill** phase from the **decode** phase.
 - Describe what the KV cache stores and why it makes generation fast.
 - Explain why long context is expensive even with these optimizations.
+- Explain how prompt caching reuses the prefix across turns, and why an agent's
+  permission or escalation prompt costs momentum rather than tokens.
 - Describe what a single training sample looks like and why next-token prediction
   trains all positions in parallel.
 
@@ -23,7 +25,8 @@ By the end you should be able to:
 4. [The KV cache](04-kv-cache.md)
 5. [Why sequential decoding is still fast](05-why-decoding-is-fast.md)
 6. [Why long context is expensive](06-long-context-cost.md)
-7. [Training a decoder-only model](07-training-a-decoder-only-model.md)
+7. [Prompt caching and the cost of a turn](07-prompt-caching-and-turn-cost.md)
+8. [Training a decoder-only model](08-training-a-decoder-only-model.md)
 
 ## Readings For This Module
 
@@ -137,6 +140,52 @@ implementation-level material.
 
 ```text
 https://blog.dailydoseofds.com/p/kv-caching-in-llms-explained-visually
+```
+
+### Anthropic — Prompt Caching (API docs)
+
+The mechanism one level up from the KV cache: reusing a processed prefix across
+requests. Covers cache breakpoints, the read vs write pricing, and the 5-minute vs
+1-hour TTL.
+
+Best for: the precise cost model behind "why re-sending the whole context is cheap."
+
+```text
+https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+```
+
+### Anthropic — How Claude Code Uses Prompt Caching
+
+A real agent's-eye view of caching: which actions keep the cached prefix intact
+(appending a message, a tool call, a permission retry) versus which bust it
+(switching model, editing the system prompt, compaction).
+
+Best for: turning the prefix rule into practical intuition about agent sessions.
+
+```text
+https://code.claude.com/docs/en/prompt-caching
+```
+
+### Anthropic — Lessons From Building Claude Code: Prompt Caching Is Everything
+
+The design rationale: how an agent is deliberately architected to keep the prefix
+stable (deferred tool loading, plan mode, compaction) so turns stay cheap.
+
+Best for: seeing prompt caching as an architectural constraint, not just a discount.
+
+```text
+https://claude.com/blog/lessons-from-building-claude-code-prompt-caching-is-everything
+```
+
+### OpenAI — Prompt Caching (guide)
+
+The same prefix-reuse idea from a second vendor, so you can separate the concept
+from any one provider's implementation.
+
+Best for: confirming prefix caching is an industry-wide pattern, not a single trick.
+
+```text
+https://platform.openai.com/docs/guides/prompt-caching
 ```
 
 ### Lilian Weng — The Transformer Family v2.0
