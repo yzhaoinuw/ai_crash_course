@@ -174,3 +174,51 @@ builds a KV cache, then generates output sequentially during decode. Long
 contexts and long outputs are powerful but expensive and error-prone, so
 production systems use summarization, retrieval, chunking, structured prompting,
 and tool verification to keep responses coherent and useful.
+
+## Keyword Index
+
+Alphabetical lookup for this chapter. Each keyword points to the lesson that
+**owns** it (the canonical treatment), not every file that mentions it. For the
+guided top-down view use [The Roadmap](#the-roadmap) above; for the cross-chapter
+map see the [master topic index](../README.md#topic-index) at the repo root.
+
+- **append-only cache** → [KV cache](02-decoder-only-generation/04-kv-cache.md)
+- **batching (training: within- vs cross-sequence)** → [Training](02-decoder-only-generation/08-training-a-decoder-only-model.md)
+- **beam search / multiple candidates** → [Reducing drift](03-generation-quality-and-decoding/02-reducing-drift.md)
+- **cache read vs write cost** → [Prompt caching](02-decoder-only-generation/07-prompt-caching-and-turn-cost.md)
+- **causal mask / causal attention** → [Decoder-only models](02-decoder-only-generation/02-decoder-only-models.md) (defined), [KV cache](02-decoder-only-generation/04-kv-cache.md) (why caching is safe), [Training](02-decoder-only-generation/08-training-a-decoder-only-model.md) (parallelism)
+- **chunking (long output)** → [Reducing drift](03-generation-quality-and-decoding/02-reducing-drift.md)
+- **context window / token budget** → [The context window](01-tokens-and-context/03-the-context-window.md)
+- **continuation engine** → [Decoder-only models](02-decoder-only-generation/02-decoder-only-models.md)
+- **cross-entropy loss / calibrated distributions** → [Training](02-decoder-only-generation/08-training-a-decoder-only-model.md)
+- **decode phase** → [Prefill vs decode](02-decoder-only-generation/03-prefill-vs-decode.md)
+- **decoder-only architecture** → [Decoder-only models](02-decoder-only-generation/02-decoder-only-models.md)
+- **embeddings** → [RAG and embeddings](04-memory-and-retrieval/02-rag-and-embeddings.md)
+- **exposure bias / error compounding** → [Why outputs drift](03-generation-quality-and-decoding/01-why-outputs-drift.md)
+- **how much chat history fits** → [How much chat fits](01-tokens-and-context/04-how-much-chat-fits.md)
+- **identity / self-model** → [Identity and instruction tuning](05-assistant-behavior-and-architecture/01-identity-and-instruction-tuning.md)
+- **instruction tuning / answering vs continuing** → [Identity and instruction tuning](05-assistant-behavior-and-architecture/01-identity-and-instruction-tuning.md)
+- **KV cache** → [The KV cache](02-decoder-only-generation/04-kv-cache.md)
+- **layers of a deployed assistant** → [Layers of an assistant](05-assistant-behavior-and-architecture/02-layers-of-an-assistant.md)
+- **long-context cost / O(n²) attention** → [Long context cost](02-decoder-only-generation/06-long-context-cost.md)
+- **lost in the middle** → [Long-context reliability](04-memory-and-retrieval/03-long-context-reliability.md)
+- **memory vs context (four meanings)** → [Memory vs context](04-memory-and-retrieval/01-memory-vs-context.md)
+- **mental models / glossary / vocabulary** → [Mental models and vocabulary](05-assistant-behavior-and-architecture/03-mental-models-and-vocabulary.md)
+- **morphology / subword tokenization / BPE** → [Tokens vs words](01-tokens-and-context/01-tokens-vs-words.md)
+- **multilingual / Chinese / mixed-script tokenization** → [Multilingual tokenization](01-tokens-and-context/02-multilingual-tokenization.md)
+- **next-token prediction** → [Stateless next-token](02-decoder-only-generation/01-stateless-next-token.md)
+- **permission / sandbox escalation cost (momentum vs tokens)** → [Prompt caching](02-decoder-only-generation/07-prompt-caching-and-turn-cost.md)
+- **prefill phase** → [Prefill vs decode](02-decoder-only-generation/03-prefill-vs-decode.md)
+- **prefix (immutable) / prefix reuse** → [KV cache](02-decoder-only-generation/04-kv-cache.md), [Prompt caching](02-decoder-only-generation/07-prompt-caching-and-turn-cost.md)
+- **prompt caching / TTL / warm vs cold cache** → [Prompt caching](02-decoder-only-generation/07-prompt-caching-and-turn-cost.md)
+- **RAG (retrieval-augmented generation)** → [RAG and embeddings](04-memory-and-retrieval/02-rag-and-embeddings.md)
+- **retrieval-based memory** → [Memory vs context](04-memory-and-retrieval/01-memory-vs-context.md) (concept), [RAG and embeddings](04-memory-and-retrieval/02-rag-and-embeddings.md) (mechanics)
+- **self-review / refinement** → [Reducing drift](03-generation-quality-and-decoding/02-reducing-drift.md)
+- **statelessness** → [Stateless next-token](02-decoder-only-generation/01-stateless-next-token.md)
+- **streaming / why decoding feels fast** → [Why sequential decoding is still fast](02-decoder-only-generation/05-why-decoding-is-fast.md)
+- **summarized context / context management** → [Memory vs context](04-memory-and-retrieval/01-memory-vs-context.md)
+- **teacher forcing / parallel-position training** → [Training](02-decoder-only-generation/08-training-a-decoder-only-model.md)
+- **temperature / sampling** → [Reducing drift](03-generation-quality-and-decoding/02-reducing-drift.md)
+- **tokens vs words** → [Tokens vs words](01-tokens-and-context/01-tokens-vs-words.md)
+- **tools (verification, code, web, citations)** → [Reducing drift](03-generation-quality-and-decoding/02-reducing-drift.md), [Layers of an assistant](05-assistant-behavior-and-architecture/02-layers-of-an-assistant.md)
+- **vector databases** → [RAG and embeddings](04-memory-and-retrieval/02-rag-and-embeddings.md)

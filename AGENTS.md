@@ -51,6 +51,7 @@ Pre-flight checklist before committing:
 - Formatter / linter is clean (matches the CI format job): `[formatter command]`
 - Test suite is green (matches the CI test job): `[test command]`
 - A new entry has been prepended to `work_log.md` describing what was done (including model + version, effort/thinking mode, and token budget if available), intended profiling signal if any, and the verification commands that were actually run.
+- If a lesson was added, renamed, renumbered, or re-scoped, the root `README.md` topic index and the chapter `README.md` keyword index are updated to match (see [Keyword and Topic Indexes](#keyword-and-topic-indexes)).
 
 If the change touches active modules, confirm imports still work — the smoke tests in `[tests/test_smoke.py or equivalent]` cover this.
 
@@ -188,3 +189,24 @@ This is a learning / knowledge-base project. When writing or expanding notes:
   that the learner could explore if they want to go deeper. Easy-to-read blogs
   and articles are preferred over papers. Include a one-line note on what each
   resource is best for.
+
+### Keyword and Topic Indexes
+
+The repo carries two hand-maintained navigation indexes. They are curated
+**canonical-location maps**, not exhaustive keyword dumps — ripgrep already covers
+the long tail and stays current, so these earn their keep only as (a) human-browsable
+navigation and (b) the "which lesson *owns* this concept?" map that grep cannot give.
+Keep them lean.
+
+- **Root `README.md` → "Topic Index"**: a collapsible master map grouped by theme.
+  The high-level topic goes in the `<summary>`; the keywords it covers are the list
+  inside, each pointing to the canonical lesson.
+- **Each chapter's `README.md` → "Keyword Index"**: an alphabetical keyword → owner
+  lookup for that chapter — a different access axis from the ordered roadmap above it.
+
+Maintenance rule (this is what stops them rotting into a liability): whenever a lesson
+is **added, renamed, renumbered, or meaningfully re-scoped**, update both indexes in
+the same commit. A keyword should point to where a concept is *taught*, not every file
+that mentions it; add a secondary location only when a concept is genuinely split (e.g.
+"causal mask" defined in one lesson, reused in another). If an index and the lessons
+ever disagree, the lessons win — fix the index.

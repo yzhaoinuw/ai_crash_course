@@ -10,6 +10,15 @@ Update this log at the end of any substantive work session unless the user expli
 
 ## 2026-07-02
 
+### Added hierarchical navigation indexes (topic + keyword) (claude-opus-4-8, default)
+
+- Prototype of a two-axis navigation system the user requested: a collapsible master **Topic Index** appended to the root `README.md` (high-level themes as `<details>` summaries, the keywords they cover as the list inside, each pointing to the canonical lesson) and an alphabetical **Keyword Index** appended to `llm-internals/README.md` (keyword → the one lesson that *owns* it).
+- Design decision (agreed with user): indexes are curated **canonical-location maps**, not exhaustive keyword dumps. Rationale: ripgrep already answers "is X covered?" against ground-truth content and stays current, so a maintained index adds value only as (a) human-browsable navigation and (b) the "which lesson owns this concept?" map grep can't give. Kept lean to limit rot.
+- Built the keyword lists from actual lesson H1–H3 headers (`rg '^#{1,3} '` across all lessons), not from memory, so entries match real content.
+- Added the maintenance discipline to `AGENTS.md`: new "Keyword and Topic Indexes" subsection under Project-Specific Reminders + a pre-flight checklist bullet — update both indexes in the same commit whenever a lesson is added/renamed/renumbered/re-scoped; if an index and the lessons disagree, the lessons win.
+- Updated `next_steps.md` (Course structure thread) to record that the root Topic Index landed and the per-chapter Keyword Index pattern is established (prototype: llm-internals).
+- Content-only; verified every index link resolves to an existing file with a scripted extract-and-check. Not yet committed — awaiting user review of the rendered collapsible index.
+
 ### Added prompt-caching lesson to Module 02 (claude-opus-4-8, default)
 
 - Conversation started as Q&A: does an agent hitting a permission/sandbox-escalation wall re-read the whole context and waste tokens? Traced the answer to prompt caching. Verified against official docs via WebSearch/WebFetch before writing: Claude Code prompt-caching doc (statelessness → full re-send each turn; exact-prefix match; append keeps cache, prefix change busts it; cache read ≈10% of input, cache write premium; 5-min vs 1-hr TTL, 1-hr auto on subscription) and the sandboxing doc (the `dangerouslyDisableSandbox` escape hatch: a failed sandboxed command is retried unsandboxed through the normal permission flow; `allowUnsandboxedCommands` defaults true). Corrected two things I'd said from memory: the escalation retry is an appended tool call so it is cache-safe (not a reprocess), and the approval window is ~1 hr on a subscription, not 5 min.

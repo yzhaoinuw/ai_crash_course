@@ -63,6 +63,11 @@ Remaining work:
   with one line per chapter linking to that chapter's roadmap README (framing
   `llm-internals/` as chapter 1). Holding off until then so the TOC isn't a
   one-item list.
+- Navigation indexes (added 2026-07-02): the root `README.md` now carries a
+  collapsible **Topic Index**, and each chapter's README ends with an alphabetical
+  **Keyword Index** (prototype: `llm-internals/`). The convention and maintenance
+  rule live in `AGENTS.md` → "Keyword and Topic Indexes". When new chapters or
+  lessons land, extend both indexes in the same commit.
 
 ## Background / Paused
 
