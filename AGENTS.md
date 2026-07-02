@@ -1,212 +1,89 @@
 # Guidelines and Tips for Agents
 
-This file is the first thing any agent (Claude, Codex, or other) should read when joining a session on this repo. It defines the runtime, the common tasks, the conventions, and the project-specific reminders. Keep it short and current.
+The shared treaty for any agent (Claude, Codex, or other) working on this repo.
+Read it first; don't auto-read every Markdown file — use the
+[Documentation](#documentation) map to pick what's relevant to the task.
 
-## Startup Rule
+## What This Repo Is
 
-At the beginning of a new chat or agent session for this project, read this file first and do not automatically read every markdown file in the repository. Use the [Documentation](#documentation) map below to decide which other files are relevant to the current task.
+A personal, docs-only **knowledge base** on AI / LLMs: ordered Markdown lessons, no
+runtime. There is **nothing to build, run, or test** — no app, test suite, formatter,
+linter, or pre-commit. "Work" here means writing and organizing notes, so skip
+hunting for a test or activation command; there isn't one.
 
-## Runtime Environment
+## Before Committing
 
-When running code, tests, or the application for this repository, use:
+- Prepend a dated entry to `work_log.md` for any substantive session (see below),
+  noting model + version and effort/thinking mode.
+- If a lesson was added, renamed, renumbered, or re-scoped, update the root
+  `README.md` topic index and the chapter `README.md` keyword index to match
+  (see [Keyword and Topic Indexes](#keyword-and-topic-indexes)).
+- Commit and push only when the user asks.
 
-- [name of the conda env / virtualenv / nvm version / etc.]
+## Keeping The Treaty Docs Current
 
-Typical startup:
+- **`work_log.md`** — at the end of a substantive session (file edits, a technical
+  decision or reversal, a reusable finding, or unfinished follow-up), prepend a dated
+  entry. Skip casual Q&A and trivial one-offs. The file's own header documents the
+  date-rotation and archiving rules.
+- **`next_steps.md`** — when a session creates or resolves future work, add or remove
+  items and keep the "Currently Hot" pointer accurate.
 
-```
-[activation command — e.g. `conda activate <env>` or `source .venv/bin/activate` or `nvm use`]
-```
+## Branching
 
-After activation, use that environment for commands such as:
-
-- [test runner, e.g. `pytest` or `npm test`]
-- [app launch, e.g. `python run.py` or `npm run dev`]
-- import checks, one-off scripts, etc.
-
-## Common Tasks
-
-Short recipes for the things you'll usually do in a session. All commands assume the env above is active.
-
-Run the app for manual testing:
-
-```
-[app launch command]
-```
-
-Run the test suite (the CI-equivalent subset — skips slow or optional-dependency tests):
-
-```
-[test command — e.g. `pytest -v -m "not slow"` or `npm run test:unit`]
-```
-
-Run the full suite, including any slow or optional-dependency tests:
-
-```
-[full test command]
-```
-
-Pre-flight checklist before committing:
-
-- Formatter / linter is clean (matches the CI format job): `[formatter command]`
-- Test suite is green (matches the CI test job): `[test command]`
-- A new entry has been prepended to `work_log.md` describing what was done (including model + version, effort/thinking mode, and token budget if available), intended profiling signal if any, and the verification commands that were actually run.
-- If a lesson was added, renamed, renumbered, or re-scoped, the root `README.md` topic index and the chapter `README.md` keyword index are updated to match (see [Keyword and Topic Indexes](#keyword-and-topic-indexes)).
-
-If the change touches active modules, confirm imports still work — the smoke tests in `[tests/test_smoke.py or equivalent]` cover this.
-
-## When To Update Treaty Docs
-
-At the end of any substantive work session, update `work_log.md` unless the user explicitly asks not to document it, says it is off the book, or the exchange was clearly trivial.
-
-A session is substantive when it includes any of:
-
-- file edits
-- meaningful validation, debugging, profiling, or artifact inspection
-- a technical decision or reversal
-- discovered evidence future agents should not have to rediscover
-- branch, PR, release, deployment, or environment state changes
-- unfinished follow-up that belongs in `next_steps.md`
-
-No work-log entry is usually needed for casual Q&A, explanation-only exchanges with no lasting project state, or tiny one-off commands with no future coordination value.
-
-Log experiments when they produce reusable evidence, a decision, or a warning for future agents, even if the code change is reverted. Skip pure scratch work when it has no future coordination value or the user wants it omitted.
-
-When a session creates or changes future work, update `next_steps.md` in the same pass: add concrete follow-ups, remove completed items, and keep "Currently Hot" accurate.
-
-## Branch Handoff Discipline
-
-Before switching away from an experimental or feature branch, fully resolve the work on that branch. Confirm whether the branch contains all intended changes, whether those changes are committed, and whether the user expects them merged, pushed, or intentionally left parked.
-
-Do not switch to the integration branch (`main`) or start new work on another branch while important experimental-branch changes are only local, unmerged, or unverified. If related work accidentally lands on the integration branch, move that work back onto the experimental branch first and retest the combined behavior there before updating the integration branch.
-
-Useful checks before switching or merging (portable git commands; run in any shell):
-
-```
-git status --short --branch
-git log --oneline --left-right --cherry-pick main...HEAD
-git merge-base --is-ancestor main HEAD
-```
+The repo is committed directly to `main`. If you do use a feature branch, finish and
+push (or explicitly park) its work before switching away — don't leave important
+changes stranded locally or unverified.
 
 ## Documentation
 
-Read these documents only as needed. The map below names each file and when it's worth opening.
+Read these only as needed:
 
-- `work_log.md` and `work_log_archive/`
-  - Use when the task needs recent implementation history, experiment outcomes, or verification breadcrumbs.
-  - The live `work_log.md` holds at most the 5 most recent unique calendar dates. Default to reading only the two most recent dated entries.
-  - Find date anchors with ripgrep and read only the slice you need:
-    `rg -n '^## [0-9]{4}-[0-9]{2}-[0-9]{2}' work_log.md`
-  - When older context is needed, open the matching file under `work_log_archive/` by its date-range filename, or grep across both at once:
-    `rg -n '^## [0-9]{4}-[0-9]{2}-[0-9]{2}' work_log.md work_log_archive/`
-  - When prepending a dated entry, if today's calendar date already has a `## YYYY-MM-DD` header at the top, add a new `###` session subsection under it. Do not start a second `## YYYY-MM-DD` header for the same date.
-  - When prepending a new date would push the live log past 5 unique calendar dates, move the oldest 5 dates as a chunk into a new file at `work_log_archive/work_log_<earliest>_to_<latest>.md`. The live file always holds at most 5 unique dates; each archive file always holds exactly 5.
+- `work_log.md` — recent implementation history and verification breadcrumbs. Find
+  date anchors with `rg -n '^## [0-9]{4}-[0-9]{2}-[0-9]{2}' work_log.md` and read only
+  the slice you need; older dates live under `work_log_archive/`.
+- `next_steps.md` — unfinished work; the "Currently Hot" pointer names active threads.
+- `README.md` — the reader-facing landing page and its collapsible topic index.
 
-- `next_steps.md`
-  - Use when planning or continuing unfinished work from previous sessions.
-  - The "Currently Hot" pointer at the top names the active threads — read it first to know what's in flight.
-  - Remove items after they are completed. Add new planned follow-ups when they become concrete.
+For any structured Markdown doc, `grep -n '^## ' <file>` gives the section map before
+a targeted read.
 
-- `project_overview.md`
-  - Use when onboarding to the codebase structure or when a task touches an unfamiliar area.
-  - The "What Looks Active vs. Legacy" section is the single most important map before editing — many repos accumulate parallel implementations, and this section keeps an agent from editing the wrong file.
+## Commit Messages
 
-- `README.md`
-  - Use when changing user-facing setup, packaging, usage, or input-file expectations.
+- Short title line; add a flat bullet body only when the commit bundles several
+  user-requested changes.
+- Describe high-level, user-facing behavior (the notes added or changed), not tests,
+  memory updates, or other behind-the-scenes work — unless that internal work is
+  itself the point of the commit.
 
-- Treaty badge (in your README)
-  - `treaty init` offers (opt-in) a centrally-hosted "Agent Collab Treaty - adopted" badge (Codex teal / Claude amber / Grok dark tri-color SVG, or reliable single-color shields.io). It is a pure visibility signal that links back to this treaty repository. No asset files are added to your project, and the image updates automatically if the design improves later. The badge is fully optional. The shields.io version is the dependable recommendation for GitHub READMEs.
+## Git Ownership
 
-- `CONTRIBUTING.md` (if present)
-  - Use when changing collaboration workflow, branch/test expectations, or documentation conventions.
+If Git warns about "dubious ownership," mark the repo safe:
+`git config --global --add safe.directory "$HOME/python_projects/ai_crash_course"`.
 
-The same anchor-grep pattern works for any structured Markdown doc in the repo — `grep -n '^## ' <file>` for the section map, then a targeted slice read rather than loading the whole file.
+## Note-Writing Style
 
-## Git Ownership Note
+This is a learning project. When writing or expanding notes:
 
-If Git reports a "detected dubious ownership" warning for this repo, mark this repository as safe.
-
-Windows (PowerShell):
-
-```powershell
-git config --global --add safe.directory C:/path/to/this/repo
-```
-
-macOS / Linux:
-
-```bash
-git config --global --add safe.directory "$HOME/path/to/this/repo"
-```
-
-This is the preferred fix unless the repository ownership itself needs to be changed at the OS level.
-
-## Pre-commit Note
-
-If your stack uses [pre-commit](https://pre-commit.com) and it cannot write to its default cache location, set a repo-local cache before running it.
-
-Windows (PowerShell):
-
-```powershell
-$env:PRE_COMMIT_HOME = "C:\path\to\this\repo\.pre-commit-cache"
-python -m pre_commit run --all-files
-```
-
-macOS / Linux:
-
-```bash
-export PRE_COMMIT_HOME="$PWD/.pre-commit-cache"
-python -m pre_commit run --all-files
-```
-
-Adjust the formatter / linter invocation for your stack (e.g., `npx lint-staged`, `cargo fmt`, `gofmt -l .`).
-
-## Commit Message Guidelines
-
-Commit messages should use:
-
-- a short title line
-- a short body with flat bullet points for additional requested changes when a commit contains multiple user-requested updates
-
-Commit message bullets should describe high-level added or changed behavior, not implementation details.
-
-For feature commits, mention only the user-facing behavior that was added or changed.
-
-Do not mention tests, docs, project memory updates, or behind-the-scenes implementation details in a feature commit message unless that internal work is itself the main purpose of the commit.
-
-## Project-Specific Reminders
-
-### Note-Writing Style
-
-This is a learning / knowledge-base project. When writing or expanding notes:
-
-- **Use `text` block illustrations when they significantly aid understanding** —
-  for example, showing a causal mask as a grid, comparing training vs inference
-  token-by-token, or tracing information flow through a cache. Prefer labeled
-  `text` blocks over prose for anything spatial or sequential.
-- **Do not add an illustration just to have one.** If the prose is already clear,
-  skip it. One good diagram beats three mediocre ones.
+- **Use `text`-block illustrations when they genuinely aid understanding** — a causal
+  mask grid, training vs inference token-by-token, information flow through a cache.
+  Prefer labeled diagrams for anything spatial or sequential, but don't add one just
+  to have one. One good diagram beats three mediocre ones.
 - **At the end of a substantive learning session, suggest 2–4 further readings**
-  that the learner could explore if they want to go deeper. Easy-to-read blogs
-  and articles are preferred over papers. Include a one-line note on what each
-  resource is best for.
+  (blogs/articles over papers), each with a one-line note on what it's best for.
 
-### Keyword and Topic Indexes
+## Keyword and Topic Indexes
 
-The repo carries two hand-maintained navigation indexes. They are curated
-**canonical-location maps**, not exhaustive keyword dumps — ripgrep already covers
-the long tail and stays current, so these earn their keep only as (a) human-browsable
-navigation and (b) the "which lesson *owns* this concept?" map that grep cannot give.
-Keep them lean.
+Two hand-maintained navigation indexes, curated as **canonical-location maps**, not
+exhaustive keyword dumps — ripgrep already covers the long tail, so these earn their
+keep only as human-browsable navigation and the "which lesson *owns* this concept?"
+map grep can't give. Keep them lean.
 
-- **Root `README.md` → "Topic Index"**: a collapsible master map grouped by theme.
-  The high-level topic goes in the `<summary>`; the keywords it covers are the list
-  inside, each pointing to the canonical lesson.
-- **Each chapter's `README.md` → "Keyword Index"**: an alphabetical keyword → owner
-  lookup for that chapter — a different access axis from the ordered roadmap above it.
+- Root `README.md` → **Topic Index**: a collapsible map grouped by theme; the topic in
+  the `<summary>`, its keywords as the list inside, each pointing to the canonical
+  lesson.
+- Each chapter's `README.md` → **Keyword Index**: an alphabetical keyword → owner lookup.
 
-Maintenance rule (this is what stops them rotting into a liability): whenever a lesson
-is **added, renamed, renumbered, or meaningfully re-scoped**, update both indexes in
-the same commit. A keyword should point to where a concept is *taught*, not every file
-that mentions it; add a secondary location only when a concept is genuinely split (e.g.
-"causal mask" defined in one lesson, reused in another). If an index and the lessons
-ever disagree, the lessons win — fix the index.
+Maintenance rule: whenever a lesson is added, renamed, renumbered, or re-scoped, update
+both indexes in the same commit. Point a keyword to where a concept is *taught*, not
+every file that mentions it. If an index and the lessons ever disagree, the lessons win.

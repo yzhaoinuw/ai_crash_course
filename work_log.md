@@ -10,6 +10,12 @@ Update this log at the end of any substantive work session unless the user expli
 
 ## 2026-07-02
 
+### Tightened AGENTS.md from 212 to 89 lines (claude-opus-4-8, default)
+
+- User flagged AGENTS.md as too long for a docs-only repo. Cut the generic-template sections that were pure unfilled placeholders or irrelevant here: Runtime Environment, Common Tasks (app/test/full-suite commands), and the entire Pre-commit Note. Condensed the survivors.
+- Preserved all real coordination value: the startup rule (folded into the intro), the work_log + next_steps discipline, a trimmed Documentation map (work_log/next_steps/README), commit-message guidelines, note-writing style, and the Keyword/Topic index maintenance rule. Added a short "What This Repo Is" that states plainly there is nothing to build/run/test.
+- Verified the only externally cross-referenced anchor (`AGENTS.md#keyword-and-topic-indexes`, linked from README) and the internal `#documentation` anchor both still resolve; final length 89 lines.
+
 ### Added hierarchical navigation indexes (topic + keyword) (claude-opus-4-8, default)
 
 - Prototype of a two-axis navigation system the user requested: a collapsible master **Topic Index** appended to the root `README.md` (high-level themes as `<details>` summaries, the keywords they cover as the list inside, each pointing to the canonical lesson) and an alphabetical **Keyword Index** appended to `llm-internals/README.md` (keyword → the one lesson that *owns* it).
