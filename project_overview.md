@@ -1,89 +1,83 @@
 # Project Overview
 
-This document orients a new agent (or human collaborator) to the codebase. It's the single most valuable artifact for getting useful work done quickly. Keep it current — when the active code path changes, update the relevant sections here.
-
 ## What This Repo Is
 
-[One or two paragraphs describing what the project is, who uses it, and what it does at a high level. Mention the entry point(s) and the primary technology stack.]
+A personal, docs-only AI knowledge base. Readers follow ordered Markdown lessons
+about LLM internals and practical AI systems. There is no application, runtime,
+dependency environment, build, test suite, or CI configuration in this repository.
 
 ## Active Runtime Path
 
-Describe the path from "user invokes the app" to "result". List each layer briefly with a pointer to the relevant file.
-
-### 1. Entrypoint
-
-[`path/to/entrypoint`](path/to/entrypoint)
-
-- [what it does]
-- [what it imports / hands off to]
-
-### 2. Main module
-
-[`path/to/main_module`](path/to/main_module)
-
-- [key responsibilities]
-- [important imports]
-
-### 3. [Add subsections as needed for UI layer, business logic, persistence, etc.]
+The reading path starts at the root [README](README.md), continues through the
+[LLM Internals roadmap](llm-internals/README.md), then a module README and its
+numbered lessons. Markdown is read directly in GitHub or a local viewer.
 
 ## Repo Structure Map
 
 ```text
-project_root/
-|- AGENTS.md
+ai_crash_course/
+|- README.md                    # landing page and Topic Index
+|- llm-internals/
+|  |- README.md                 # roadmap, future modules, Keyword Index
+|  |- 01-tokens-and-context/
+|  |- 02-decoder-only-generation/
+|  |- 03-generation-quality-and-decoding/
+|  |- 04-memory-and-retrieval/
+|  `- 05-assistant-behavior-and-architecture/
+|- AGENTS.md                    # project guidance
+|- CLAUDE.md                    # imports shared AGENTS.md
 |- project_overview.md
+|- treaty_conventions.md        # upstream-maintained treaty mechanics
 |- next_steps.md
 |- work_log.md
 |- work_log_archive/
-|- README.md
-|- [src/ or app/ or lib/]
-|- [tests/]
-|- [scripts/]
-|- [docs/]
-|- [config files: pyproject.toml / package.json / Cargo.toml / etc.]
+`- .copier-answers.yml           # template version and recorded answers
 ```
 
 ## What Looks Active vs. Legacy
 
-This is the single most important section for agents. Many repos accumulate parallel implementations during refactors; without an explicit map, an agent will frequently edit the wrong file.
+The five numbered module folders are current. Module 02 includes prompt caching
+and training internals as lessons 07 and 08. Future modules are proposals in the
+roadmap, not implemented chapters.
 
-### Active / relevant now
+The former monolith `llm-internals/context-memory-and-generation.md` was split
+into these modules and removed. Historical log references to it, or to lesson 07
+before training was renumbered to 08, describe past paths; do not recreate them.
+Sibling chapters such as `agents/` are planned in [next_steps.md](next_steps.md).
 
-- [`path/to/active_file_1`](path/to/active_file_1)
-- [`path/to/active_file_2`](path/to/active_file_2)
+## Authored vs. Derived
 
-### Likely older or secondary
+Lessons, module READMEs, both navigation indexes, `AGENTS.md`, this overview,
+planning, and work-log entries are hand-maintained. Lessons are the source of
+truth if a navigation index disagrees with them. Update both indexes when a
+lesson is added, renamed, renumbered, or re-scoped.
 
-- [`path/to/legacy_file_1`](path/to/legacy_file_1) — [why it's still in-tree]
-- [`path/to/legacy_file_2`](path/to/legacy_file_2) — [reason]
+`treaty_conventions.md` comes from the upstream template; refresh it with
+`treaty update` rather than editing shared mechanics locally.
+`.copier-answers.yml` records Copier's template pin and answers; use the CLI's
+targeted answer overrides instead of hand-editing metadata. There are no
+generated lesson pages, compiled artifacts, or lockfiles in this checkout.
 
 ## Tests And Fixtures
 
-[Where the test suite lives, what kinds of tests exist (unit / integration / smoke / e2e), and what fixtures or sample data are canonical for development.]
-
-- [`path/to/tests/`](path/to/tests/) — [brief description]
-- [`path/to/sample_data/`](path/to/sample_data/) — [what's in it]
+No application tests or fixtures exist. Check `git diff --check`, run
+`treaty validate .` using a current installed CLI, and inspect Markdown links
+and anchors after navigation changes. Treaty is maintenance tooling; its
+installation does not establish an application runtime for this repo.
 
 ## User Data Expectations
 
-If the application consumes external data, document the expected schema here.
-
-[Required / optional fields, file formats, conventions.]
+No runtime inputs, datasets, or private user records are needed to read the notes.
 
 ## Practical Mental Model
 
-If you only want to understand the current product, read files in this order:
-
-1. [`README.md`](README.md)
-2. [`path/to/entrypoint`](path/to/entrypoint)
-3. [`path/to/main_module`](path/to/main_module)
-4. [next most important file]
-5. [...]
+Start with [AGENTS.md](AGENTS.md) for editing rules, the root
+[README](README.md) for topic ownership, and the chapter
+[roadmap](llm-internals/README.md) for module order and keyword ownership.
+Use [next_steps.md](next_steps.md) for unfinished curriculum work.
 
 ## Questions Worth Clarifying Later
 
-Not blockers, just places where intent would help future agents:
-
-- [Whether the legacy `[X]` module should be removed or kept as reference]
-- [Whether `[Y]` is a stable contract or a moving target]
-- [Anything where you, as the maintainer, would otherwise have to answer the same question from each new agent]
+Choose the next module or sibling chapter with the user. Expand the root chapter
+table of contents when a second chapter exists; preserve the current two-level
+course/chapter structure and the navigation-index maintenance rule.

@@ -6,7 +6,25 @@ Rotation policy: the live log holds at most the **5 most recent unique calendar 
 
 If today's date already has a `## YYYY-MM-DD` header at the top, add a new `###` session subsection under it rather than starting a second `## YYYY-MM-DD` header for the same date.
 
-Update this log at the end of any substantive work session unless the user explicitly asks not to document it. Substantive work includes file edits, meaningful validation or debugging, technical decisions or reversals, reusable discoveries, branch/PR/release state changes, or follow-up work that future agents need. Log useful experiments even when the code was reverted; skip casual Q&A, trivial one-off commands, and pure scratch work with no future coordination value.
+Update this log at the end of any substantive work session unless the user explicitly asks not to document it. **The log records decisions about the project, not the content of the work produced** — the diff already says what changed. See [Work Log Discipline](treaty_conventions.md#work-log-discipline) for what counts as substantive and what to skip.
+
+## 2026-10-22
+
+### Update the adopted treaty and assess Windows migration (Codex, GPT-6)
+
+- Fast-forwarded clean `main` from `9eaa19b` to `4a43728` (four upstream commits). Updated template `v0.3.1` to released `v0.9.3` using an isolated temporary CLI, Python 3.11.11, Copier 9.19.1, and Typer 0.27.3. Project runtime remains docs-only.
+- Kept the flat layout and selected `has_releases=false`, `uses_precommit=false`, and `verification_command=git diff --check` through CLI overrides. The maintained conventions now carry the shared procedures; the concise project guidance retains writing rules, both navigation-index rules, and explicit user authorization for commits/pushes/PRs.
+- Preview and apply both exited 1 and reported only `AGENTS.md` conflicted, the same four clean content updates, and a separate newline-only `CLAUDE.md` rewrite. Resolved the single conflict without replacing project guidance. Sandbox clone/temp/index restrictions required scoped elevated execution and are local environment friction.
+- Confirmed issue #23's remaining first-run log paragraph and newly added overview placeholders. Removed init-only text and completed the overview from repository evidence. Added explicit verification blocks to historical entries using only existing evidence, marking absent commands honestly; retained all prior session narratives. There are now five live dates, so no archive rotation was needed.
+- Posted and read back upstream assessments on [#31](https://github.com/yzhaoinuw/agent_collab_treaty/issues/31#issuecomment-6348017425) (Windows summary/staging-hint fix confirmed) and [#23](https://github.com/yzhaoinuw/agent_collab_treaty/issues/23#issuecomment-6348021392) (overall migration and known cleanup). No distinct new issue found. The connector denied writes, so posting used host-authenticated `gh issue comment --body-file`.
+- Initially left the update local for review; the user subsequently authorized committing and pushing it to `main`. No PR was requested. The CLI was installed only in a temporary environment, not a project or conda environment.
+- Verification:
+  - `git fetch --all --prune`; `git pull --ff-only origin main` (fast-forward).
+  - `treaty --version`; `treaty diff .`; `treaty update . --dry-run --data has_releases=false --data uses_precommit=false --data 'verification_command=git diff --check'`; identical apply without `--dry-run` (both exit 1 with the same single conflict).
+  - `treaty validate .` passed after resolution; `treaty diff .` reported all seven conventions sections untouched. Expected project-owned drift remains in the customized guidance and overview.
+  - `C:\Users\yzhao\miniconda3\python.exe C:\Users\yzhao\.codex\visualizations\2026\10\22\01a164cf-8011-7563-92f7-32b83a1d6437\verify_treaty_migration.py` passed: 163 links/anchors, original writing/index rules verbatim, every historical narrative line retained, five unique live dates, and no rejects/conflict markers/unmerged entries.
+  - `git diff --check`; `git diff --cached --exit-code`; `git diff --exit-code HEAD -- README.md CLAUDE.md llm-internals work_log_archive` passed. `git add -- CLAUDE.md` cleared its newline-only status without staging content.
+  - Before delivery, `git fetch --all --prune` and `git rev-list --left-right --count HEAD...origin/main` confirmed the baseline was still current (`0 0`).
 
 ## 2026-07-02
 
@@ -15,6 +33,8 @@ Update this log at the end of any substantive work session unless the user expli
 - User flagged AGENTS.md as too long for a docs-only repo. Cut the generic-template sections that were pure unfilled placeholders or irrelevant here: Runtime Environment, Common Tasks (app/test/full-suite commands), and the entire Pre-commit Note. Condensed the survivors.
 - Preserved all real coordination value: the startup rule (folded into the intro), the work_log + next_steps discipline, a trimmed Documentation map (work_log/next_steps/README), commit-message guidelines, note-writing style, and the Keyword/Topic index maintenance rule. Added a short "What This Repo Is" that states plainly there is nothing to build/run/test.
 - Verified the only externally cross-referenced anchor (`AGENTS.md#keyword-and-topic-indexes`, linked from README) and the internal `#documentation` anchor both still resolve; final length 89 lines.
+- Verification:
+  - Legacy record: The original entry reports checking the two referenced anchors and the 89-line length; no exact command was recorded.
 
 ### Added hierarchical navigation indexes (topic + keyword) (claude-opus-4-8, default)
 
@@ -24,6 +44,8 @@ Update this log at the end of any substantive work session unless the user expli
 - Added the maintenance discipline to `AGENTS.md`: new "Keyword and Topic Indexes" subsection under Project-Specific Reminders + a pre-flight checklist bullet — update both indexes in the same commit whenever a lesson is added/renamed/renumbered/re-scoped; if an index and the lessons disagree, the lessons win.
 - Updated `next_steps.md` (Course structure thread) to record that the root Topic Index landed and the per-chapter Keyword Index pattern is established (prototype: llm-internals).
 - Content-only; verified every index link resolves to an existing file with a scripted extract-and-check. Not yet committed — awaiting user review of the rendered collapsible index.
+- Verification:
+  - Legacy record: The original entry reports a scripted check of every index link; the script and exact command were not recorded.
 
 ### Added prompt-caching lesson to Module 02 (claude-opus-4-8, default)
 
@@ -33,6 +55,8 @@ Update this log at the end of any substantive work session unless the user expli
 - Renumbered training lesson 07 → 08 (`git mv`) so the inference-mechanics lessons stay grouped; prompt caching is now lesson 07. Updated the one in-repo link in `02-decoder-only-models.md` (07→08).
 - Updated module `README.md` (new objective bullet, lessons list now 1–8, four prompt-caching readings) and roadmap `README.md` (Module 02 highlight bullets now include prompt caching + the previously-missing training bullet; consolidated bookmark list gained the four prompt-caching links).
 - Content-only change; no tests/runtime in this repo. Verified with ripgrep that no stale `07-training` links remain (only the historical work-log line) and that every internal link in the new lesson resolves.
+- Verification:
+  - Legacy record: The original entry reports a ripgrep scan for stale lesson paths and an internal-link check; no exact commands were recorded.
 
 ## 2026-06-03
 
@@ -43,6 +67,8 @@ Update this log at the end of any substantive work session unless the user expli
 - Updated `02-decoder-only-models.md` to add a causal mask grid where the file had previously only described the rule in prose.
 - Updated module `README.md`: added lesson 7, one new learning objective, and three new training-focused readings (Karpathy "Let's Build GPT", Lilian Weng generalized LMs, Sebastian Raschka's LLM book).
 - Updated `AGENTS.md` Project-Specific Reminders: added note-writing style guidance — use `text` illustrations when they add real value (not by default), suggest 2–4 further readings at end of substantive learning sessions, prefer blogs/articles over papers.
+- Verification:
+  - Legacy record: No verification command or result was recorded in the original session entry.
 
 ## 2026-05-31
 
@@ -52,11 +78,15 @@ Update this log at the end of any substantive work session unless the user expli
 - Sourced the real badge markup from the template repo (`gh:yzhaoinuw/agent_collab_treaty`, `copier.yml`) instead of hand-writing a URL. Did NOT run `treaty init` in-repo (would re-template the customized AGENTS.md/work_log.md); cloned to a temp dir, extracted markup, removed temp dir.
 - User chose the tri-color SVG variant. Added it to `README.md`: `assets/treaty-adopted.svg` raw URL linking to the treaty repo. Caveat flagged to user: the template warns raw-SVG badges may not render through GitHub's camo proxy for all viewers; shields.io variant is the reliable fallback (one-line swap if it shows broken).
 - Also fixed a pre-existing broken link: README "Topics" pointed at the deleted monolith `llm-internals/context-memory-and-generation.md`; repointed to `llm-internals/README.md` (the roadmap index from the restructure).
+- Verification:
+  - Legacy record: The original entry records inspecting the upstream badge source and correcting the README target; no separate verification command was recorded.
 
 ### Added an information-flow illustration to the KV cache note (claude-opus-4-8, default)
 
 - User asked for a simple illustration of information-flow direction and what happens when a new KV entry is created. Added an "Illustration: information flow and the append step" subsection to `llm-internals/02-decoder-only-generation/04-kv-cache.md` using ASCII/`text` diagrams: (1) a new token ("mat") forming a query, attending over the frozen cache, producing its own K/V, and being appended; (2) a step-by-step append trace showing earlier entries never change; (3) a one-way arrow-of-flow diagram (new-reads-old, never backward).
 - Content-only change; no tests/runtime in this repo.
+- Verification:
+  - Legacy record: The original entry records a content-only change and no runtime tests; no verification command was recorded.
 
 ## 2026-05-30
 
@@ -68,12 +98,16 @@ Update this log at the end of any substantive work session unless the user expli
   - "So what is the catch? (compute for memory)" — the trade is recomputation for memory: (1) cache size grows linearly and can exceed model weights, capping context length + concurrency; (2) decode is memory-bandwidth bound, since each step re-reads the whole cache, so per-token latency grows with context length even though the per-step math is constant. Connects to why paged attention / GQA / quantized caches exist (the "KV cache engineering" future module).
 - Follow-up: user pushed back with the common misconception that earlier tokens must be re-attended to the expanded context to "stay accurate." Added a subsection "But don't the earlier words need to re-read the expanded context?" to the same note: cache is append-only (written once per token, never rewritten); decoder-only models are causal by design/training so earlier tokens are *not supposed* to see later context; context integrates at the frontier (new-reads-old), never backward; and this is why bidirectional BERT-style encoders cannot use an append-only KV cache.
 - Content-only change; no tests/runtime in this repo.
+- Verification:
+  - Legacy record: The original entry records a content-only change and no runtime tests; no verification command was recorded.
 
 ### Recorded course-structure decision; committed + pushed the restructure (claude-opus-4-8, default)
 
 - Decision: repo is two-level — root = course (chapter table of contents), each chapter (e.g. `llm-internals/`) holds ordered module folders. Do not flatten module folders to root; `agents/` is the expected next parallel chapter.
 - Added a "Course structure" thread to `next_steps.md`: a root-level TOC README is deferred until a second chapter lands (so it isn't a one-item list).
 - Committed the full restructure + treaty-doc updates and pushed to `main`.
+- Verification:
+  - Legacy record: The original entry records a commit and push but no verification commands or remote-ref evidence.
 
 ### Restructured llm-internals into an ordered study roadmap (claude-opus-4-8, default)
 
@@ -83,7 +117,8 @@ Update this log at the end of any substantive work session unless the user expli
 - Split the monolith's 20 sections into ~16 lesson docs grouped by module; each module has a `README.md` with objectives + its slice of the appendix readings. Top-level `llm-internals/README.md` is the roadmap index (module map, future modules, consolidated bookmark list, one-paragraph summary).
 - Distributed all 16 appendix readings to the module they belong to (verified none dropped). Removed the original monolith via `git rm` (recoverable from history; content fully redistributed).
 - Decision: nested module folders under `llm-internals/` rather than repo root, since the whole curriculum is currently LLM-internals; agents/memory-systems become future modules.
-- Verification: `find llm-internals -type f | sort` confirms 24 files (5 module READMEs + 1 index + ~18 lessons) and the original monolith is gone. Content-only change; no tests/runtime in this repo.
+- Verification:
+  - `find llm-internals -type f | sort` confirms 24 files (5 module READMEs + 1 index + ~18 lessons) and the original monolith is gone. Content-only change; no tests/runtime in this repo.
 
 <!--
 Each session entry follows this shape:

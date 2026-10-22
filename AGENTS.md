@@ -4,6 +4,9 @@ The shared treaty for any agent (Claude, Codex, or other) working on this repo.
 Read it first; don't auto-read every Markdown file — use the
 [Documentation](#documentation) map to pick what's relevant to the task.
 
+Keep this file under 150 lines. Shared mechanics live in
+[`treaty_conventions.md`](treaty_conventions.md); project-specific rules live here.
+
 ## What This Repo Is
 
 A personal, docs-only **knowledge base** on AI / LLMs: ordered Markdown lessons, no
@@ -19,13 +22,17 @@ hunting for a test or activation command; there isn't one.
   `README.md` topic index and the chapter `README.md` keyword index to match
   (see [Keyword and Topic Indexes](#keyword-and-topic-indexes)).
 - Commit and push only when the user asks.
+- Run `git diff --check` and `treaty validate .` with a current Treaty CLI;
+  check relative links and anchors when document paths or headings change.
+- Do not create a pull request unless the user explicitly asks.
 
 ## Keeping The Treaty Docs Current
 
 - **`work_log.md`** — at the end of a substantive session (file edits, a technical
   decision or reversal, a reusable finding, or unfinished follow-up), prepend a dated
   entry. Skip casual Q&A and trivial one-offs. The file's own header documents the
-  date-rotation and archiving rules.
+  date-rotation and archiving rules. Follow [Work Log Discipline](treaty_conventions.md#work-log-discipline)
+  for entry structure and check the log before an authorized push or merge too.
 - **`next_steps.md`** — when a session creates or resolves future work, add or remove
   items and keep the "Currently Hot" pointer accurate.
 
@@ -34,11 +41,25 @@ hunting for a test or activation command; there isn't one.
 The repo is committed directly to `main`. If you do use a feature branch, finish and
 push (or explicitly park) its work before switching away — don't leave important
 changes stranded locally or unverified.
+See [Branch Handoff](treaty_conventions.md#branch-handoff) for the shared procedure.
+
+## Updating The Treaty
+
+Only update the adopted template when the user asks. Upgrade the CLI first, inspect
+`treaty --version` and `treaty diff`, preview with `treaty update --dry-run`, then
+apply and resolve conflicts while preserving these project rules. Full procedure:
+[Updating The Treaty](treaty_conventions.md#updating-the-treaty).
+
+This repo keeps its treaty docs at the root (`docs_dir: .`). It has no releases or
+pre-commit configuration; use targeted `--data` answers for new template questions.
 
 ## Documentation
 
 Read these only as needed:
 
+- `treaty_conventions.md` — upstream-maintained mechanics; read before logging,
+  rotating dates, handing off branches, or updating the template. Avoid local edits.
+- `project_overview.md` — course structure and authored/derived file ownership.
 - `work_log.md` — recent implementation history and verification breadcrumbs. Find
   date anchors with `rg -n '^## [0-9]{4}-[0-9]{2}-[0-9]{2}' work_log.md` and read only
   the slice you need; older dates live under `work_log_archive/`.

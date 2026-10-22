@@ -11,7 +11,8 @@ Active threads — read these first to know what work is in flight:
 
 When an agent (or human) creates or significantly updates a thread/plan here, include model + version, effort/thinking mode, and token budget (if known) in parentheses after the thread name or at the end of the status line, using the same compact convention as `work_log.md`.
 
-Other sections below are background or paused; treat them as reference unless a new request reopens them.
+Active threads below use `##` headings. Background or paused threads use `###`
+under "Background / Paused"; change the heading level when moving a thread.
 
 ## LLM-internals curriculum (claude-opus-4-8, default)
 
@@ -73,6 +74,9 @@ Remaining work:
 
 Sections below this line are older threads kept for context. They're not the current focus, but recording the state they were left in saves the next agent from re-deriving it.
 
-### [Paused thread name]
+### Upstream treaty follow-up (Codex, GPT-6)
 
-[Last-known state, why it's paused, what would trigger resuming it.]
+The local v0.9.3 migration is complete. [Issue #23](https://github.com/yzhaoinuw/agent_collab_treaty/issues/23#issuecomment-6348021392)
+still tracks upstream first-run text and new-placeholder cleanup; both were repaired
+locally. When the user next requests a template update, check that issue before
+previewing. The Windows summary fix was verified in [#31](https://github.com/yzhaoinuw/agent_collab_treaty/issues/31#issuecomment-6348017425).
