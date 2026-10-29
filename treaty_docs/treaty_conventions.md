@@ -2,9 +2,9 @@
 
 The generic mechanics of the Agent Collab Treaty: what belongs in the work log, how dated entries are written and rotated, how branches are handed off, and how `treaty update` behaves.
 
-**This file is maintained upstream.** `treaty update` keeps it current, which also makes it the file where local edits are most likely to collide. Project-specific answers — the runtime, the common tasks, the reminders, the documentation map — belong in [`AGENTS.md`](AGENTS.md), which upstream does not revise.
+**This file is maintained upstream.** `treaty update` keeps it current, which also makes it the file where local edits are most likely to collide. Project-specific answers — the runtime, the common tasks, the reminders, the documentation map — belong in [`../AGENTS.md`](../AGENTS.md), which upstream does not revise.
 
-Read this when you are about to *perform* one of these procedures. `AGENTS.md` is what you read at the start of a session.
+Read this when you are about to *perform* one of these procedures. `../AGENTS.md` is what you read at the start of a session.
 
 ## Work Log Discipline
 
@@ -29,7 +29,7 @@ Each session entry records the model + version, effort/thinking mode, and token 
 
 When a session creates or changes future work, update `next_steps.md` in the same pass: add concrete follow-ups, remove completed items, and keep "Currently Hot" accurate.
 
-`next_steps.md` is laid out by heading level. An active thread is a `##` section between "Currently Hot" and "Background / Paused"; a paused one is a `###` under "Background / Paused". Moving a thread between the two means changing its heading level, not just where it sits. Keep the file to follow-ups: once a feature ships, its design detail belongs in `project_overview.md`.
+`next_steps.md` is laid out by heading level. An active thread is a `##` section between "Currently Hot" and "Background / Paused"; a paused one is a `###` under "Background / Paused". Moving a thread between the two means changing its heading level, not just where it sits. Keep the file to follow-ups: once a feature ships, its design detail belongs in `../project_overview.md`. A Currently Hot link uses the heading's GitHub anchor, which drops punctuation other than `-` and `_`: `## Fit the model (gpt-5.5)` is `#fit-the-model-gpt-55`. `treaty validate` checks every such link and names the anchor it most likely meant.
 
 ## Work Log Rotation And Dating
 
@@ -70,18 +70,20 @@ Pulling upstream treaty refinements into this project is a maintainer's call —
 
 All of it runs off `.copier-answers.yml` at the repo root — Copier's record of the answers this project was installed with and the template version it is pinned to. It stays at the root whatever layout the docs use, because it is the file that records the layout. Keep it committed: if git ignores it, `treaty update` and `treaty diff` have nothing to read and cannot run.
 
-1. Commit or stash local changes first. `treaty update` requires a clean, git-tracked working tree and refuses to run on a dirty one.
-2. `treaty diff` shows, section by section, how far this project has drifted from the template version it is pinned to — that is the conflict exposure before you touch anything.
-3. `treaty update --dry-run` previews the merge without writing.
-4. `treaty update` performs a **three-way merge**, so edits that do not overlap upstream changes are kept automatically. Where a local edit overlaps a changed region, it leaves conflict markers (`<<<<<<< before updating` / `=======` / `>>>>>>> after updating`) and an unmerged file, exactly like `git merge`. Resolve each one — keep your content, fold in the new template material — then `git add` the file.
-5. Review `git diff`, confirm no conflict markers survive, then commit.
+1. Upgrade the CLI first: `python -m pip install -U agent-collab-treaty`, then check `treaty --version`. Template fixes often depend on CLI checks, and an older CLI runs without complaint, so its `treaty validate` passes without knowing what the new template expects.
+2. Commit or stash local changes. `treaty update` requires a clean, git-tracked working tree and refuses to run on a dirty one.
+3. `treaty diff` shows, section by section, how far this project has drifted from the template version it is pinned to — that is the conflict exposure before you touch anything.
+4. `treaty update --dry-run` previews the merge without writing.
+5. `treaty update` performs a **three-way merge**, so edits that do not overlap upstream changes are kept automatically. Where a local edit overlaps a changed region, it leaves conflict markers (`<<<<<<< before updating` / `=======` / `>>>>>>> after updating`) and an unmerged file, exactly like `git merge`. Resolve each one — keep your content, fold in the new template material — then `git add` the file.
+6. Review `git diff`, confirm no conflict markers survive, then commit.
+7. Run `treaty validate`. Its warnings name template text that only your copy can fix: placeholders a new section brought in, or first-run text that no longer applies. Upstream can't remove that text from `work_log.md` or `next_steps.md` without conflicting with every adopter, so delete it yourself.
 
 ## Customizing These Docs
 
 How much an edit will cost you at update time depends on *what* you edit, not how much:
 
-- **Bracket placeholders** (`[path/to/entrypoint]`) are conflict-free by construction. Upstream will never ship a revision to them, so replacing them costs nothing later. Most of `project_overview.md` is this.
-- **Maintained guidance** — the prose in this file — is actively revised upstream, so local edits here are the ones that turn into conflicts. Prefer adding to `AGENTS.md` over editing this file.
+- **Bracket placeholders** (`[path/to/entrypoint]`) are conflict-free by construction. Upstream will never ship a revision to them, so replacing them costs nothing later. Most of `../project_overview.md` is this.
+- **Maintained guidance** — the prose in this file — is actively revised upstream, so local edits here are the ones that turn into conflicts. Prefer adding to `../AGENTS.md` over editing this file.
 - **Renaming a heading is the worst single thing you can do.** A three-way merge reads it as a delete plus an unrelated add, so a later upstream edit to that section conflicts *and* cannot be auto-resolved. If you want different wording, change the body and leave the heading alone. `treaty diff` flags renamed headings specifically.
 - **Deleting a section** is the next-worst: upstream edits to it arrive with nothing local to merge into. Where the treaty offers a question for a section you don't want (`has_releases`, `uses_precommit`, `include_git_ownership_note`), answer it instead of deleting — the section then never renders and never conflicts.
-- **Adding a section** always merges cleanly. Domain-specific conventions belong in `AGENTS.md` as new sections.
+- **Adding a section** always merges cleanly. Domain-specific conventions belong in `../AGENTS.md` as new sections.

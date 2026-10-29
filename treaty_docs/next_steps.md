@@ -2,12 +2,14 @@
 
 Use this checklist alongside `work_log.md`.
 
+Paths in backticks below are relative to the repository root.
+
 ## Currently Hot
 
 Active threads — read these first to know what work is in flight:
 
-- LLM-internals curriculum — Modules 01–05 are built; the natural next action is to author one of the "Future Modules" listed in `llm-internals/README.md` (see thread below).
-- Course structure — add a root-level table-of-contents README framing `llm-internals/` as chapter 1, to be created when a second chapter (likely `agents/`) lands (see thread below).
+- [LLM-internals curriculum](#llm-internals-curriculum-claude-opus-4-8-default) — Modules 01–05 are built; the natural next action is to author one of the "Future Modules" listed in `llm-internals/README.md`.
+- [Course structure](#course-structure-chapters-and-a-root-table-of-contents-claude-opus-4-8-default) — add a root-level table-of-contents README framing `llm-internals/` as chapter 1, to be created when a second chapter (likely `agents/`) lands.
 
 When an agent (or human) creates or significantly updates a thread/plan here, include model + version, effort/thinking mode, and token budget (if known) in parentheses after the thread name or at the end of the status line, using the same compact convention as `work_log.md`.
 
@@ -67,16 +69,19 @@ Remaining work:
 - Navigation indexes (added 2026-07-02): the root `README.md` now carries a
   collapsible **Topic Index**, and each chapter's README ends with an alphabetical
   **Keyword Index** (prototype: `llm-internals/`). The convention and maintenance
-  rule live in `AGENTS.md` → "Keyword and Topic Indexes". When new chapters or
+  rule live in `../AGENTS.md` → "Keyword and Topic Indexes". When new chapters or
   lessons land, extend both indexes in the same commit.
 
 ## Background / Paused
 
 Sections below this line are older threads kept for context. They're not the current focus, but recording the state they were left in saves the next agent from re-deriving it.
 
-### Upstream treaty follow-up (Codex, GPT-6)
+### Upstream Treaty layout parity (Codex, GPT-6)
 
-The local v0.9.3 migration is complete. [Issue #23](https://github.com/yzhaoinuw/agent_collab_treaty/issues/23#issuecomment-6348021392)
-still tracks upstream first-run text and new-placeholder cleanup; both were repaired
-locally. When the user next requests a template update, check that issue before
-previewing. The Windows summary fix was verified in [#31](https://github.com/yzhaoinuw/agent_collab_treaty/issues/31#issuecomment-6348017425).
+Status: paused — awaiting upstream [issue #35](https://github.com/yzhaoinuw/agent_collab_treaty/issues/35).
+
+The v0.10.2 update and move into `treaty_docs/` are complete. Relocation correctly
+uses `../project_overview.md` in the conventions, but the upstream template omits
+the prefix in one Work Log Discipline sentence, causing one section of reported
+drift. Keep the correct relocated path. When the user next requests a Treaty
+update, check the issue and verify that the new nested render agrees.

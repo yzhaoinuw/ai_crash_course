@@ -27,10 +27,11 @@ ai_crash_course/
 |- AGENTS.md                    # project guidance
 |- CLAUDE.md                    # imports shared AGENTS.md
 |- project_overview.md
-|- treaty_conventions.md        # upstream-maintained treaty mechanics
-|- next_steps.md
-|- work_log.md
-|- work_log_archive/
+|- treaty_docs/
+|  |- treaty_conventions.md     # upstream-maintained treaty mechanics
+|  |- next_steps.md
+|  |- work_log.md
+|  `- work_log_archive/
 `- .copier-answers.yml           # template version and recorded answers
 ```
 
@@ -43,7 +44,7 @@ roadmap, not implemented chapters.
 The former monolith `llm-internals/context-memory-and-generation.md` was split
 into these modules and removed. Historical log references to it, or to lesson 07
 before training was renumbered to 08, describe past paths; do not recreate them.
-Sibling chapters such as `agents/` are planned in [next_steps.md](next_steps.md).
+Sibling chapters such as `agents/` are planned in [treaty_docs/next_steps.md](treaty_docs/next_steps.md).
 
 ## Authored vs. Derived
 
@@ -52,7 +53,7 @@ planning, and work-log entries are hand-maintained. Lessons are the source of
 truth if a navigation index disagrees with them. Update both indexes when a
 lesson is added, renamed, renumbered, or re-scoped.
 
-`treaty_conventions.md` comes from the upstream template; refresh it with
+`treaty_docs/treaty_conventions.md` comes from the upstream template; refresh it with
 `treaty update` rather than editing shared mechanics locally.
 `.copier-answers.yml` records Copier's template pin and answers; use the CLI's
 targeted answer overrides instead of hand-editing metadata. There are no
@@ -74,7 +75,7 @@ No runtime inputs, datasets, or private user records are needed to read the note
 Start with [AGENTS.md](AGENTS.md) for editing rules, the root
 [README](README.md) for topic ownership, and the chapter
 [roadmap](llm-internals/README.md) for module order and keyword ownership.
-Use [next_steps.md](next_steps.md) for unfinished curriculum work.
+Use [treaty_docs/next_steps.md](treaty_docs/next_steps.md) for unfinished curriculum work.
 
 ## Questions Worth Clarifying Later
 
